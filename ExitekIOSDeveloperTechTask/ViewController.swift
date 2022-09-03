@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     
     private var textForTableView: [String] = []
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         productCollectionView.delegate = self
@@ -90,9 +90,9 @@ class ViewController: UIViewController {
                 textForTableView.append(error.description)
             default: break
             }
-            } catch {
-                print("some error")
-            }
+        } catch {
+            print("some error")
+        }
         productCollectionView.reloadData()
         
         for textField in deleteTextField {
@@ -147,7 +147,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.productCollectionView.dequeueReusableCell(withIdentifier: "mobileCell", for: indexPath)
         cell.textLabel?.text = textForTableView[indexPath.row]
-          return cell
+        return cell
     }
     
     
@@ -161,9 +161,9 @@ extension ViewController: MobileStorage {
     func getAll() -> Set<Mobile> {
         let mobiles = StorageManager.shared.fetchMobile()
         return mobiles.reduce(into: Set<Mobile>()) { (mobiles, mobile) in
-                    mobiles.insert(mobile.value)
-                    return
-                }
+            mobiles.insert(mobile.value)
+            return
+        }
     }
     
     func findByImei(_ imei: String) -> Mobile? {
@@ -220,10 +220,6 @@ class StorageManager {
         guard let data = userDefaults.object(forKey: mobileKey) as? Data else {return [:]}
         guard let savedMobiles = try? JSONDecoder().decode([String: Mobile].self, from: data) else {return [:]}
         return savedMobiles
-//        return savedMobiles.reduce(into: Set<Mobile>()) { (mobiles, mobile) in
-//            mobiles.insert(mobile.value)
-//            return
-//        }
     }
     
     func delete(at mobile: Mobile) -> Mobile? {
